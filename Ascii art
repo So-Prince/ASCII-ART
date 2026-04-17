@@ -1,0 +1,53 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"strings"
+)
+
+func ShawDow(text string) {
+	file, err := os.ReadFile("standard.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	result := strings.Split(string(file), "\n")
+
+	var a rune = 1
+
+	font := strings.Split(text, "\\n")
+
+	for _, ch := range font {
+		if ch == "" {
+			fmt.Println()
+			continue
+		}
+		for lines := 1; lines < 9; lines++ {
+			for _, char := range ch {
+				start := (char-32)*9 + a
+				fmt.Print(result[start])
+			}
+			a++
+			fmt.Println()
+		}
+		a = 1
+	}
+}
+
+func main() {
+	str := os.Args[1]
+	if len(os.Args) < 2 {
+		return
+	}
+
+	if str == "\\n" {
+		fmt.Println()
+		return
+	}
+	if str == "" {
+		return
+	}
+	ShawDow(str)
+}
